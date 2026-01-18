@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'bookshelf.apps.BookshelfConfig',
+    'bookshelf.apps.BookshelfConfig',       # your old app
+    'relationship_app.apps.RelationshipAppConfig',  # add this
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
