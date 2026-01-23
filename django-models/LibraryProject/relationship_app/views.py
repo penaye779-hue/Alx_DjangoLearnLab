@@ -1,8 +1,7 @@
+from django.shortcuts import render, redirect
+from django.contrib.auth import login  # ALX expects this import
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 
 # ----- Registration View -----
 def register_view(request):
@@ -10,7 +9,7 @@ def register_view(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # redirect to login after successful registration
+            return redirect('login')  # redirect to login page after registration
     else:
         form = UserCreationForm()
     return render(request, "relationship_app/register.html", {"form": form})
