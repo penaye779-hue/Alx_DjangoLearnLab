@@ -3,7 +3,7 @@ from django.contrib.auth import login  # ALX expects this import
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.detail import DetailView
-from .models import Book, Library
+from .models import Book, Library  # ALX expects Library here
 
 # -------------------------
 # Authentication Views
