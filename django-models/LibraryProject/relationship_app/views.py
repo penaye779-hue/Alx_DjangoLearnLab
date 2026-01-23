@@ -1,12 +1,11 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 from django.views.generic import DetailView
 from .models import Book, Library
 
 # Function-based view
 def book_list(request):
     books = Book.objects.all()
-    output = "\n".join([f"{book.title} by {book.author.name}" for book in books])
-    return HttpResponse(output)
+    return render(request, "relationship_app/list_books.html", {"books": books})
 
 # Class-based view
 class LibraryDetailView(DetailView):
