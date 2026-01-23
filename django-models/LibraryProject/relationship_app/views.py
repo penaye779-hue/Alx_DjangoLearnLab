@@ -1,16 +1,14 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import DetailView
 from .models import Book, Library
 
-# Function-based view for listing all books
-def list_books(request):
+# Function-based view
+def book_list(request):
     books = Book.objects.all()
-    return render(request, 'list_books.html', {'books': books})
+    output = "\n".join([f"{book.title} by {book.author.name}" for book in books])
+    return HttpResponse(output)
 
-# Class-based view for library details
-from django.views.generic.detail import DetailView
-
+# Class-based view
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'library_detail.html'
-    context_object_name = 'library'
+    template_name = "relationship_app/library_detail.html"
