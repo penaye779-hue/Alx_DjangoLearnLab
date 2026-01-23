@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ library.name }}</title>
-</head>
-<body>
-    <h1>{{ library.name }}</h1>
-
-    <h2>Books in this library</h2>
-    <ul>
-        {% for book in library.books.all %}
-            <li>{{ book.title }}</li>
-        {% endfor %}
-    </ul>
-
-</body>
-</html>
+<h1>{{ object.name }}</h1>
+<h2>Books in this library:</h2>
+<ul>
+  {% for book in object.book_set.all %}
+    <li>{{ book.title }}</li>
+  {% endfor %}
+</ul>
