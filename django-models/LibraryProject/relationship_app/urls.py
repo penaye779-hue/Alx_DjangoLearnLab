@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import list_books, LibraryDetailView  # ALX requires this exact import
+from .views import list_books, LibraryDetailView, register, CustomLoginView, CustomLogoutView  # ALX requires this exact import
 
 from .views import (
     register, CustomLoginView, CustomLogoutView,
