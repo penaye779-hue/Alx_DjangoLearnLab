@@ -1,28 +1,78 @@
-from django.urls import path
-from .views import (
-    list_books, LibraryDetailView,        # Task 1
-    register, CustomLoginView, CustomLogoutView,  # Task 2
-    admin_view, librarian_view, member_view,      # Task 3
-    add_book, edit_book, delete_book              # Task 4
-)
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic.detail import DetailView  # ALX requires this exact import
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import user_passes_test, permission_required
 
-urlpatterns = [
-    # ---------- TASK 1 ----------
-    path('books/', list_books, name='list_books'),
-    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+from .models import Book
+from .models import Library  # ALX requires this exact import
+from .models import UserProfile
 
-    # ---------- TASK 2 ----------
-    path('register/', register, name='register'),
-    path('login/', CustomLoginView.as_view(template_name='relationship_app/login.html'), name='login'),
-    path('logout/', CustomLogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
+# ---------- TASK 1 ----------
+def list_books(request):
+    books = Book.objects.all()  # ALX requires this exact line
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
-    # ---------- TASK 3 ----------
-    path('admin-view/', admin_view, name='admin_view'),
-    path('librarian-view/', librarian_view, name='librarian_view'),
-    path('member-view/', member_view, name='member_view'),
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'
+    context_object_name = 'library'
 
-    # ---------- TASK 4 ----------
-    path('books/add/', add_book, name='add_book'),
-    path('books/<int:pk>/edit/', edit_book, name='edit_book'),
-    path('books/<int:pk>/delete/', delete_book, name='delete_book'),
-]
+
+# ---------- TASK 2 ----------
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('list_books')
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
+
+class CustomLoginView(LoginView):
+    template_name = 'relationship_app/login.html'
+
+class CustomLogoutView(LogoutView):
+    template_name = 'relationship_app/logout.html'
+
+
+# ---------- TASK 3: Role-based access ----------
+def is_admin(user):
+    return user.userprofile.role == 'Admin'
+
+def is_librarian(user):
+    return user.userprofile.role == 'Librarian'
+
+def is_member(user):
+    return user.userprofile.role == 'Member'
+
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
+
+
+# ---------- TASK 4: Permission-based book management ----------
+@permission_required('relationship_app.can_add_book')
+def add_book(request):
+    return render(request, 'relationship_app/add_book.html')
+
+@permission_required('relationship_app.can_change_book')
+def edit_book(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    return render(request, 'relationship_app/edit_book.html', {'book': book})
+
+@permission_required('relationship_app.can_delete_book')
+def delete_book(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    return render(request, 'relationship_app/delete_book.html', {'book': book})
