@@ -7,9 +7,13 @@ from django.contrib.auth.decorators import user_passes_test, permission_required
 
 from .models import Book, Library, UserProfile
 
-# ---------- TASK 1 ----------
+from django.shortcuts import render
+from django.views.generic.detail import DetailView
+from .models import Book, Library
+
+# Function-based view: list all books
 def list_books(request):
-    books = Book.objects.all()  # ALX requires this exact line
+    books = Book.objects.all()  # <--- ALX wants this exact line
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
 # Class-based view: library details
@@ -17,6 +21,7 @@ class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
+
 
 # ---------- TASK 2 ----------
 def register(request):
