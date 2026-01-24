@@ -1,15 +1,28 @@
-from django.shortcuts import render
-from django.views.generic.detail import DetailView
-from .models import Book
-from .models import Library  # separate import for ALX string match
+from django.urls import path
+from .views import (
+    list_books, LibraryDetailView,        # Task 1
+    register, CustomLoginView, CustomLogoutView,  # Task 2
+    admin_view, librarian_view, member_view,      # Task 3
+    add_book, edit_book, delete_book              # Task 4
+)
 
-# Function-based view: list all books
-def list_books(request):
-    books = Book.objects.all()  # ALX requires this exact line
-    return render(request, 'relationship_app/list_books.html', {'books': books})
+urlpatterns = [
+    # ---------- TASK 1 ----------
+    path('books/', list_books, name='list_books'),
+    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
 
-# Class-based view: library details
-class LibraryDetailView(DetailView):
-    model = Library
-    template_name = 'relationship_app/library_detail.html'
-    context_object_name = 'library'
+    # ---------- TASK 2 ----------
+    path('register/', register, name='register'),
+    path('login/', CustomLoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+    path('logout/', CustomLogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
+
+    # ---------- TASK 3 ----------
+    path('admin-view/', admin_view, name='admin_view'),
+    path('librarian-view/', librarian_view, name='librarian_view'),
+    path('member-view/', member_view, name='member_view'),
+
+    # ---------- TASK 4 ----------
+    path('books/add/', add_book, name='add_book'),
+    path('books/<int:pk>/edit/', edit_book, name='edit_book'),
+    path('books/<int:pk>/delete/', delete_book, name='delete_book'),
+]
