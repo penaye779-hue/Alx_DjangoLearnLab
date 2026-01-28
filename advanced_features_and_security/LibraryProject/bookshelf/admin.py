@@ -12,3 +12,7 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+from django.contrib import admin
+from .models import Article
+
+admin.site.register(Article)
