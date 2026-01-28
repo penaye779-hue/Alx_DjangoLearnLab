@@ -16,8 +16,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
-    'accounts',          # your custom user app
-    'bookshelf',         # if needed
+    'LibraryProject.accounts',          # your custom user app
+    'LibraryProject.bookshelf',        # if needed
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,3 +84,4 @@ STATICFILES_DIRS = [BASE_DIR / 'static']  # optional global static folder
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
