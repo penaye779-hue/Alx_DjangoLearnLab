@@ -16,8 +16,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
-    'LibraryProject.accounts',          # your custom user app
-    'LibraryProject.bookshelf',        # if needed
+    'bookshelf',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,6 +24,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
