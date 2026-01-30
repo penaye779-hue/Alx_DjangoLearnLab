@@ -89,22 +89,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']  # optional global static folder
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
-# SECURITY SETTINGS
-
-DEBUG = False  # Never True in production
-
-ALLOWED_HOSTS = ['*']  # For development / checker (adjust in real prod)
-
-# Browser security
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
-# Clickjacking protection
-X_FRAME_OPTIONS = 'DENY'
-
-# Cookie security (HTTPS only)
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
 # ==============================
 # HTTPS & SSL SECURITY SETTINGS
 # ==============================
