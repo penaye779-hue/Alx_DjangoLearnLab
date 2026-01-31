@@ -6,8 +6,6 @@ urlpatterns = [
     path('api/', include('api.urls')),  # must literally say 'api.urls'
 ]
 
-
-
 """
 URL configuration for api_project project.
 

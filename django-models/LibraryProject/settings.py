@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'relationship_app',  # your app
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -82,3 +83,4 @@ STATICFILES_DIRS = [BASE_DIR / 'static']  # optional global static folder
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.CustomUser'
