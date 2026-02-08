@@ -52,3 +52,14 @@ class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
+# Task 2: Add filtering, searching, and ordering to BookListView
+
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+# Add these inside your existing BookListView class
+BookListView.filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+BookListView.filterset_fields = ['title', 'publication_year', 'author']
+BookListView.search_fields = ['title', 'author__name']
+BookListView.ordering_fields = ['title', 'publication_year']
+BookListView.ordering = ['title']  # default ordering
