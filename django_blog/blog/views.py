@@ -96,20 +96,18 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == post.author
 
 # Create Comment (on post detail page)
-class CommentCreateView(LoginRequiredMixin, CreateView):
+class CommentCreateView(CreateView):
     model = Comment
     form_class = CommentForm
     template_name = 'blog/comment_form.html'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        from django.shortcuts import get_object_or_404
-        from .models import Post
-        form.instance.post = get_object_or_404(Post, pk=self.kwargs['post_id'])  # must match post_id
+        form.instance.post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
-        return self.object.post.get_absolute_url()  # We'll define this in Post model
+        return self.object.post.get_absolute_url()
         
 
 # Update Comment (only author)

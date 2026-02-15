@@ -26,5 +26,7 @@ class PostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['body']  # remove 'tags' here
-
+        fields = ['body']  # tags are not required here
+        widgets = {
+            'body': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write a comment...'})
+        }

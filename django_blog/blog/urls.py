@@ -35,4 +35,6 @@ urlpatterns = [
 
     # ✅ Tag URL
     path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts-by-tag'),
+    path('posts/<int:post_id>/comments/new/', CommentCreateView.as_view(), name='comment-create'),
+
 ]
