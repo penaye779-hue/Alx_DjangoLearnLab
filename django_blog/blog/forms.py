@@ -17,11 +17,14 @@ class RegisterForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'tags']  # ✅ include tags
+        fields = ['title', 'content', 'tags']
+        widgets = {
+            'tags': TagWidget(),
+        }
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['body']  # only the body field
+        fields = ['body']  # remove 'tags' here
 
