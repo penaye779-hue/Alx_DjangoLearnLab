@@ -1,13 +1,11 @@
 from django.urls import path
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
-from django.urls import path
 from .views import register, profile
-from django.urls import path
 from .views import register, profile
 from .views import CommentCreateView, CommentUpdateView, CommentDeleteView
 from .views import search_posts, posts_by_tag
 from django.contrib.auth import views as auth_views
-
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, PostByTagListView
 urlpatterns = [
     path('posts/', PostListView.as_view(), name='post-list'),                  # List all posts
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),      # View single post
@@ -27,4 +25,14 @@ urlpatterns += [
 urlpatterns += [
     path('search/', search_posts, name='post-search'),
     path('tags/<str:tag_name>/', posts_by_tag, name='posts-by-tag'),
+]
+urlpatterns = [
+    path('', PostListView.as_view(), name='post-list'),
+    path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
+    path('post/new/', PostCreateView.as_view(), name='post-create'),
+    path('post/<int:pk>/edit/', PostUpdateView.as_view(), name='post-update'),
+    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+
+    # ✅ Tag URL
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts-by-tag'),
 ]
