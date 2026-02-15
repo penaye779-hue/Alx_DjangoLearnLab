@@ -14,7 +14,8 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from .models import Comment
 from .forms import CommentForm, PostForm, RegisterForm
-
+from django.views.generic import ListView
+from taggit.models import Tag
 # -------------------
 # Authentication Views
 # -------------------
@@ -134,6 +135,14 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         comment = self.get_object()
         return self.request.user == comment.author
 
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/post_list_by_tag.html'  # create this template
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+        return Post.objects.filter(tags__slug=tag_slug)
     def get_success_url(self):
         return self.object.post.get_absolute_url()
 def search_posts(request):
