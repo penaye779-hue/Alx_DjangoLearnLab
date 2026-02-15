@@ -101,7 +101,9 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        form.instance.post = get_object_or_404(Post, pk=self.kwargs['post_pk'])
+        from django.shortcuts import get_object_or_404
+        from .models import Post
+        form.instance.post = get_object_or_404(Post, pk=self.kwargs['post_id'])  # must match post_id
         return super().form_valid(form)
 
     def get_success_url(self):
