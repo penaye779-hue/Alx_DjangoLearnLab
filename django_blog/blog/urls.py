@@ -2,6 +2,8 @@ from django.urls import path
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
 from django.urls import path
 from .views import register, profile
+from django.urls import path
+from .views import register, profile
 urlpatterns = [
     path('posts/', PostListView.as_view(), name='post-list'),                  # List all posts
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),      # View single post
@@ -10,4 +12,6 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'), # Delete post
     path('login/', auth_views.LoginView.as_view(template_name='blog/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='blog/logout.html'), name='logout'),
+    path('register/', register, name='register'),
+    path('profile/', profile, name='profile'),
 ]
