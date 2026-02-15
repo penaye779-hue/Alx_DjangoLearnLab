@@ -13,6 +13,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.db.models import Q
 from .models import Comment
+from .forms import CommentForm, PostForm, RegisterForm
 
 # -------------------
 # Authentication Views

@@ -6,6 +6,8 @@ from django.urls import path
 from .views import register, profile
 from .views import CommentCreateView, CommentUpdateView, CommentDeleteView
 from .views import search_posts, posts_by_tag
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
     path('posts/', PostListView.as_view(), name='post-list'),                  # List all posts
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),      # View single post
